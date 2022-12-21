@@ -5,7 +5,10 @@ class DataConfig:
     label_transform = ""
     def get_data_config(self, data_name):
         self.data_name = data_name
-        if data_name == 'LEVIR':
+        if data_name == "xBD":
+            self.label_transform = "norm"
+            self.root_dir = "/u/mnitsche/ChangeFormer/xBD/"
+        elif data_name == 'LEVIR':
             self.label_transform = "norm"
             self.root_dir = '/media/lidan/ssd2/CDData/LEVIR-CD256/'
         elif data_name == 'DSIFN':

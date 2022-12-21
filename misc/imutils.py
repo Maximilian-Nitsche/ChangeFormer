@@ -1,42 +1,42 @@
 import random
 import numpy as np
-import cv2
+# import cv2
 from PIL import Image
 from PIL import ImageFilter
 import PIL
-import tifffile
+# import tifffile
 
 
-def cv_rotate(image, angle, borderValue):
-    """
-    rot angle,  fill with borderValue
-    """
-    # grab the dimensions of the image and then determine the
-    # center
-    (h, w) = image.shape[:2]
-    (cX, cY) = (w // 2, h // 2)
+# def cv_rotate(image, angle, borderValue):
+#     """
+#     rot angle,  fill with borderValue
+#     """
+#     # grab the dimensions of the image and then determine the
+#     # center
+#     (h, w) = image.shape[:2]
+#     (cX, cY) = (w // 2, h // 2)
 
-    # grab the rotation matrix (applying the negative of the
-    # angle to rotate clockwise), then grab the sine and cosine
-    # (i.e., the rotation components of the matrix)
-    # -angle位置参数为角度参数负值表示顺时针旋转; 1.0位置参数scale是调整尺寸比例（图像缩放参数），建议0.75
-    M = cv2.getRotationMatrix2D((cX, cY), -angle, 1.0)
-    cos = np.abs(M[0, 0])
-    sin = np.abs(M[0, 1])
+#     # grab the rotation matrix (applying the negative of the
+#     # angle to rotate clockwise), then grab the sine and cosine
+#     # (i.e., the rotation components of the matrix)
+#     # -angle位置参数为角度参数负值表示顺时针旋转; 1.0位置参数scale是调整尺寸比例（图像缩放参数），建议0.75
+#     M = cv2.getRotationMatrix2D((cX, cY), -angle, 1.0)
+#     cos = np.abs(M[0, 0])
+#     sin = np.abs(M[0, 1])
 
-    # compute the new bounding dimensions of the image
-    nW = int((h * sin) + (w * cos))
-    nH = int((h * cos) + (w * sin))
+#     # compute the new bounding dimensions of the image
+#     nW = int((h * sin) + (w * cos))
+#     nH = int((h * cos) + (w * sin))
 
-    # adjust the rotation matrix to take into account translation
-    M[0, 2] += (nW / 2) - cX
-    M[1, 2] += (nH / 2) - cY
-    if isinstance(borderValue, int):
-        values = (borderValue, borderValue, borderValue)
-    else:
-        values = borderValue
-    # perform the actual rotation and return the image
-    return cv2.warpAffine(image, M, (nW, nH), borderValue=values)
+#     # adjust the rotation matrix to take into account translation
+#     M[0, 2] += (nW / 2) - cX
+#     M[1, 2] += (nH / 2) - cY
+#     if isinstance(borderValue, int):
+#         values = (borderValue, borderValue, borderValue)
+#     else:
+#         values = borderValue
+#     # perform the actual rotation and return the image
+#     return cv2.warpAffine(image, M, (nW, nH), borderValue=values)
 
 
 def pil_resize(img, size, order):
@@ -375,23 +375,23 @@ def save_image(image_numpy, image_path):
     image_pil.save(image_path)
 
 
-def im2arr(img_path, mode=1, dtype=np.uint8):
-    """
-    :param img_path:
-    :param mode:
-    :return: numpy.ndarray, shape: H*W*C
-    """
-    if mode==1:
-        img = PIL.Image.open(img_path)
-        arr = np.asarray(img, dtype=dtype)
-    else:
-        arr = tifffile.imread(img_path)
-        if arr.ndim == 3:
-            a, b, c = arr.shape
-            if a < b and a < c:  # 当arr为C*H*W时，需要交换通道顺序
-                arr = arr.transpose([1,2,0])
-    # print('shape: ', arr.shape, 'dytpe: ',arr.dtype)
-    return arr
+# def im2arr(img_path, mode=1, dtype=np.uint8):
+#     """
+#     :param img_path:
+#     :param mode:
+#     :return: numpy.ndarray, shape: H*W*C
+#     """
+#     if mode==1:
+#         img = PIL.Image.open(img_path)
+#         arr = np.asarray(img, dtype=dtype)
+#     else:
+#         arr = tifffile.imread(img_path)
+#         if arr.ndim == 3:
+#             a, b, c = arr.shape
+#             if a < b and a < c:  # 当arr为C*H*W时，需要交换通道顺序
+#                 arr = arr.transpose([1,2,0])
+#     # print('shape: ', arr.shape, 'dytpe: ',arr.dtype)
+#     return arr
 
 
 

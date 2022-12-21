@@ -39,7 +39,7 @@ class CDEvaluator():
             self.best_epoch_id = checkpoint['best_epoch_id']
 
         else:
-            raise FileNotFoundError('no such checkpoint %s' % checkpoint_name)
+            raise FileNotFoundError(f'no such checkpoint {os.path.join(self.checkpoint_dir, checkpoint_name)}')
         return self.net_G
 
 
